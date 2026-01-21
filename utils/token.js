@@ -5,7 +5,11 @@ export const createAccessToken = (payload) => {
     throw new Error("ACCESS_TOKEN_SECRET is missing");
   }
 
+  if (typeof payload !== "object") {
+    throw new Error("JWT payload must be an object");
+  }
+
   return jwt.sign(payload, process.env.ACCESS_TOKEN_SECRET, {
-    expiresIn: "1d",
+    expiresIn: "15m",
   });
 };

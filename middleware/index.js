@@ -20,7 +20,7 @@ export const verifyAccessToken = async (req, res, next) => {
       return res.status(401).json({ msg: "User not found" });
     }
 
-    req.user = user; // or req.user = { id: user._id }
+    req.user = user; 
     next();
   } catch (error) {
     if (error.name === "JsonWebTokenError") {
