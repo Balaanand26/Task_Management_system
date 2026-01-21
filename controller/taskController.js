@@ -12,22 +12,33 @@ export const getallTask = async (req, res) => {
 
 export const getTask = async (req, res) => {
   try {
-    if (!validateObjectId(req.param.tasksId)) {
-      return res.status(400).json({ msg: "Task id not valid" });
+    const { taskId } = req.params;
+
+    if (!validateObjectId(taskId)) {
+      return res.status(400).json({ status: false, msg: "Task id not valid" });
     }
+
     const task = await Task.findOne({
+      _id: taskId,
       user: req.user.id,
-      _id: req.params.taskId,
     });
+
     if (!task) {
-      return res.status(400).json({ msg: "No task found" });
+      return res.status(404).json({ status: false, msg: "Task not found" });
     }
-    res.status(200).json({ msg: "Task found successfully" });
+
+    res.status(200).json({
+      status: true,
+      task,
+      msg: "Task found successfully",
+    });
   } catch (err) {
     console.error(err);
-    return res.status(500).json({ msg: "Internal Server Error" });
+    res.status(500).json({ status: false, msg: "Internal Server Error" });
   }
 };
+
+
 export const postTask = async (req, res) => {
   try {
     const { description } = req.body;
