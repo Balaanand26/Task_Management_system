@@ -11,8 +11,8 @@ const router = express.Router();
 
 router.get("/", verifyAccessToken, getallTask);
 router.get("/:taskId", verifyAccessToken, getTask);
-router.get("/", verifyAccessToken, postTask);
-router.get("/:taskId", verifyAccessToken, updateTask);
-router.get("/:taskId", verifyAccessToken, deleteTask);
+router.post("/", verifyAccessToken, postTask);
+router.put("/:taskId", verifyAccessToken, updateTask);
+router.delete("/:taskId", verifyAccessToken, deleteTask);
 
 export default router;
